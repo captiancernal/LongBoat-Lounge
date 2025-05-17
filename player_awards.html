@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Awards - Vikings Football Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        :root {
+            /* Gold and Wood Palette */
+            --award-bg: #FDFBF5; /* Creamy off-white background */
+            --award-wood-dark: #6F4E37; /* Coffee brown for dark wood elements / text */
+            --award-wood-light: #A07855; /* Lighter wood tone for accents */
+            --award-gold-primary: #D4AF37; /* Old Gold - less bright, more classic */
+            --award-gold-secondary: #E6C66E; /* Lighter gold for highlights/hovers */
+            --award-text-primary: #4A3B31; /* Dark, rich brown for text */
+            --award-text-on-dark: #FDFBF5; /* Text on dark wood/gold backgrounds */
+
+            /* Original CSU Colors (keeping for navbar consistency) */
+            --csu-green: #004D40;
+            --csu-white: #FFFFFF;
+            --csu-gray: #52545A;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif; /* Lato for general text */
+            background-color: var(--award-bg);
+            color: var(--award-text-primary);
+            overflow-x: hidden;
+            animation: pageFadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navbar styling (keeping original for consistency) */
+        .bg-csu-green { background-color: var(--csu-green); }
+        .text-csu-white { color: var(--csu-white); }
+        nav a { transition: color 0.3s ease, background-color 0.3s ease; }
+
+        /* Page Header */
+        .awards-header h1 {
+            font-family: 'Oswald', sans-serif;
+            color: var(--award-wood-dark);
+            text-shadow: 1px 1px 2px var(--award-gold-secondary);
+        }
+        .awards-header p {
+            color: var(--award-wood-light);
+        }
+
+        /* Tab Styling for Awards */
+        .award-tab-button {
+            font-family: 'Oswald', sans-serif;
+            padding: 0.75rem 1.25rem; /* Adjusted padding for more tabs */
+            font-size: 0.9rem; /* Slightly smaller for more tabs */
+            font-weight: 500;
+            color: var(--award-wood-light);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap; /* Prevent tabs from wrapping */
+        }
+        .award-tab-button.active, .award-tab-button:hover {
+            color: var(--award-gold-primary);
+            border-bottom-color: var(--award-gold-primary);
+        }
+        .award-tab-button.active {
+            background-color: rgba(212, 175, 55, 0.05); 
+        }
+        .tabs-container nav {
+             -ms-overflow-style: none;  /* IE and Edge */
+             scrollbar-width: none;  /* Firefox */
+        }
+        .tabs-container nav::-webkit-scrollbar { /* Chrome, Safari, Opera */
+            display: none;
+        }
+
+
+        /* Award Card Styling */
+        .award-card {
+            background-color: var(--csu-white);
+            border: 1px solid var(--award-gold-primary);
+            border-left: 5px solid var(--award-gold-primary);
+            box-shadow: 0 4px 15px rgba(111, 78, 55, 0.1); 
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .award-card-heisman { 
+            background-color: #fffaf0; 
+            border-color: var(--award-gold-primary);
+             border-left-width: 8px;
+        }
+        .award-title {
+            font-family: 'Oswald', sans-serif;
+            color: var(--award-wood-dark);
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--award-gold-secondary);
+        }
+        .trophy-placeholder { /* This will be replaced by actual img tags */
+            width: 150px;
+            height: 200px;
+            background-color: #E0E0E0; 
+            border: 2px dashed var(--award-gold-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            color: var(--award-wood-light);
+            margin: 0 auto 1.5rem auto; 
+            border-radius: 0.25rem;
+        }
+         .trophy-image { /* Style for actual trophy images */
+            display: block;
+            max-width: 180px; /* Max width for trophy */
+            max-height: 220px; /* Max height for trophy */
+            width: auto;
+            height: auto;
+            margin: 0 auto 1.5rem auto; /* Centered */
+            object-fit: contain; /* Ensures image scales nicely */
+            border: 2px solid var(--award-gold-secondary);
+            padding: 5px;
+            background-color: #fff; /* White background for image if it has transparency */
+            border-radius: 0.25rem;
+        }
+        .winners-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .winners-list li {
+            padding: 0.6rem 0.25rem; /* Adjusted padding */
+            border-bottom: 1px solid #f3eade; /* Lighter, warmer separator */
+            font-size: 0.95rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .winners-list li:last-child {
+            border-bottom: none;
+        }
+        .winner-year {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            color: var(--award-gold-primary);
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        .winner-details {
+            flex-grow: 1;
+        }
+        .winner-name {
+            font-weight: 700;
+            color: var(--award-text-primary);
+        }
+        .winner-team-pos {
+            font-style: italic;
+            color: var(--award-wood-light);
+            font-size: 0.9em;
+            margin-left: 0.25rem;
+        }
+    </style>
+</head>
+<body class="bg-award-bg">
+    <nav class="bg-csu-green shadow-md fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center">
+                     <a href="index.html" class="flex items-center space-x-2">
+                         <img class="h-10 w-auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Cleveland_State_Vikings_logo.svg/200px-Cleveland_State_Vikings_logo.svg.png" alt="CSU Logo" onerror="this.onerror=null; this.style.display='none'; document.getElementById('logo-text-nav').style.display='block';">
+                         <span id="logo-text-nav" class="text-csu-white text-xl font-bold hidden">CSU Vikings Hub</span>
+                         <span class="text-csu-white text-xl font-bold ml-2 hidden sm:inline">Vikings Hub</span>
+                     </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="players.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Players</a>
+                        <a href="player_awards.html" class="bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Player Awards</a>
+                        <a href="all_americans.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">All-Americans</a>
+                        <a href="csu_depth_chart.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">CSU Depth Chart</a>
+                        <a href="schedule.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Schedule</a>
+                        <a href="stats.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Stats Hub</a>
+                        <a href="the_cauldron.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">The Cauldron</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" id="menu-button" class="bg-csu-green inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-csu-green focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6 hamburger-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /> </svg>
+                        <svg class="hidden h-6 w-6 close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-csu-green">
+                <a href="index.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="players.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Players</a>
+                <a href="player_awards.html" class="bg-gray-700 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Player Awards</a>
+                <a href="all_americans.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">All-Americans</a>
+                <a href="csu_depth_chart.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">CSU Depth Chart</a>
+                <a href="schedule.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Schedule</a>
+                <a href="stats.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Stats Hub</a>
+                <a href="the_cauldron.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">The Cauldron</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <header class="mb-10 text-center awards-header">
+                <h1 class="text-4xl md:text-5xl font-bold mb-3">Player Awards Showcase</h1>
+                <p class="text-lg md:text-xl">Celebrating the finest achievements in college football.</p>
+            </header>
+
+            <div x-data="awardsPageData()" class="mb-6">
+                <div class="border-b-2 border-award-gold-secondary mb-6 tabs-container">
+                    <nav class="-mb-px flex space-x-1 sm:space-x-2 overflow-x-auto pb-1" aria-label="Awards">
+                        <template x-for="awardName in orderedAwardNames" :key="awardName">
+                            <button @click="selectedAward = awardName"
+                                    :class="{ 'active': selectedAward === awardName }"
+                                    class="award-tab-button">
+                                <span x-text="awardName"></span>
+                            </button>
+                        </template>
+                    </nav>
+                </div>
+
+                <div class="mt-6">
+                    <template x-for="awardName in orderedAwardNames" :key="awardName">
+                        <div x-show="selectedAward === awardName" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
+                            <div :class="awardName === 'Heisman Trophy' ? 'award-card award-card-heisman' : 'award-card'">
+                                <h2 class="award-title" x-text="awardName"></h2>
+                                <img :src="awardsData[awardName]?.trophyImage || 'https://placehold.co/150x200/E0E0E0/A07855?text=Trophy'" 
+                                     :alt="awardName + ' Trophy'" 
+                                     class="trophy-image"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/150x200/E0E0E0/A07855?text=Trophy&font=lato';">
+                                <h3 class="text-lg font-semibold text-award-wood-dark mt-6 mb-3 font-['Oswald']">Past Winners:</h3>
+                                <ul class="winners-list">
+                                    <template x-for="winner in awardsData[awardName]?.winners" :key="winner.year + '-' + winner.name">
+                                        <li>
+                                            <span class="winner-year" x-text="winner.year + ':'"></span>
+                                            <div class="winner-details">
+                                                <span class="winner-name" x-text="winner.name"></span>
+                                                <span class="winner-team-pos" x-text="'(' + winner.team + (winner.pos ? ', ' + winner.pos : '') + ')'"></span>
+                                            </div>
+                                        </li>
+                                    </template>
+                                    <template x-if="!awardsData[awardName]?.winners || awardsData[awardName]?.winners.length === 0">
+                                        <li class="text-award-wood-light italic">No winners listed for this award yet.</li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-csu-green text-gray-300 py-6 mt-12 border-t-4 border-award-gold-primary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; <span id="current-year">[YEAR]</span> Fictional Football League Tracker. All rights reserved.</p>
+            <p class="mt-1">[Go Vikings!]</p>
+        </div>
+    </footer>
+
+    <script>
+        function awardsPageData() {
+            return {
+                selectedAward: 'Heisman Trophy',
+                orderedAwardNames: [
+                    'Heisman Trophy', 'Maxwell Award', 'Walter Camp Award', 'Bednarik Award', 
+                    'Bronko Nagurski Trophy', 'Davey O\'Brien Award', 'Doak Walker Award', 
+                    'Biletnikoff Award', 'John Mackey Award', 'Outland Trophy', 'Rimington Trophy', 
+                    'Lombardi Award', 'Butkus Award', 'Jim Thorpe Award', 'Lou Groza Award', 'Ray Guy Award'
+                ],
+                awardsData: {
+                    'Heisman Trophy': {
+                        trophyImage: 'https://placehold.co/180x240/D4AF37/4A3B31?text=Heisman&font=oswald', 
+                        winners: [ 
+                            { year: 2029, name: 'Keke Odighizuwa', team: 'M-OH', pos: 'WR' },
+                            { year: 2028, name: 'Amar\'e Hocker', team: 'CLEV', pos: 'QB' },
+                            { year: 2027, name: 'Lynel Billups-Williams', team: 'M-OH', pos: 'WR' },
+                            { year: 2026, name: 'Lynel Billups-Williams', team: 'M-OH', pos: 'WR' },
+                            { year: 2025, name: 'Ty Simpson', team: 'BAMA', pos: 'QB' },
+                            { year: 2024, name: 'Jalen Milroe', team: 'BAMA', pos: 'QB' },
+                            { year: 2023, name: 'Jayden Daniels', team: 'LSU', pos: 'QB' }
+                        ]
+                    },
+                    'Maxwell Award': {
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Maxwell&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Keke Odighizuwa', team: 'M-OH', pos: 'WR' },
+                            { year: 2028, name: 'Amar\'e Hocker', team: 'CLEV', pos: 'QB' },
+                            { year: 2027, name: 'Lynel Billups-Williams', team: 'M-OH', pos: 'WR' },
+                            { year: 2026, name: 'Cam Coleman', team: 'FLA', pos: 'WR' },
+                            { year: 2025, name: 'Cade Klubnik', team: 'CLEM', pos: 'QB' },
+                            { year: 2024, name: 'Jalen Milroe', team: 'BAMA', pos: 'QB' },
+                            { year: 2023, name: 'Michael Penix Jr.', team: 'WASH', pos: 'QB' }
+                        ]
+                    },
+                    'Walter Camp Award': { 
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Camp&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Cornell Tavares', team: 'M-OH', pos: 'QB' },
+                            { year: 2028, name: 'Amar\'e Hocker', team: 'CLEV', pos: 'QB' },
+                            { year: 2027, name: 'Lynel Billups-Williams', team: 'M-OH', pos: 'WR' },
+                            { year: 2026, name: 'Amar\'e Hocker', team: 'CLEV', pos: 'QB' },
+                            { year: 2025, name: 'Lynel Billups-Williams', team: 'M-OH', pos: 'WR' },
+                            { year: 2024, name: 'Cade McDonald', team: 'M-OH', pos: 'WR' },
+                            { year: 2023, name: 'Jayden Daniels', team: 'LSU', pos: 'QB' }
+                        ]
+                    },
+                    'Bednarik Award': {
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Bednarik&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Nelson Kumar', team: 'M-OH', pos: 'LB' },
+                            { year: 2028, name: 'Owen Long', team: 'CSU', pos: 'LB' }, // Assuming CSU for Cleveland State
+                            { year: 2027, name: 'Tavares Jameson', team: 'ORE', pos: 'DB' },
+                            { year: 2026, name: 'Red Murdock', team: 'BUFF', pos: 'LB' },
+                            { year: 2025, name: 'Jo\'Laison Landry', team: 'TXST', pos: 'DL' },
+                            { year: 2024, name: 'Donovan Ezeiruaku', team: 'BC', pos: 'DL' },
+                            { year: 2023, name: 'Payton Wilson', team: 'NCST', pos: 'LB' }
+                        ]
+                    },
+                    'Bronko Nagurski Trophy': { 
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Nagurski&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Josh Eason', team: 'UGA', pos: 'DL' }, 
+                            { year: 2028, name: 'Will Smith', team: 'TLSA', pos: 'DL' },
+                            { year: 2027, name: 'Jeffery Rush', team: 'MISS', pos: 'DL' },
+                            { year: 2026, name: 'Kamran James', team: 'FLA', pos: 'DL' },
+                            { year: 2025, name: 'Travion Barnes', team: 'FIU', pos: 'LB' },
+                            { year: 2024, name: 'Suntarine Perkins', team: 'MISS', pos: 'LB' },
+                            { year: 2023, name: 'Xavier Watts', team: 'ND', pos: 'S' }
+                        ]
+                    },
+                    'Davey O\'Brien Award': { 
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=O\'Brien&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Cornell Tavares', team: 'M-OH', pos: 'QB' },
+                            { year: 2028, name: 'Amar\'e Hocker', team: 'CLEV', pos: 'QB' },
+                            { year: 2027, name: 'Marcel Reed', team: 'TAMU', pos: 'QB' }, 
+                            { year: 2026, name: 'DJ Lagway', team: 'FLA', pos: 'QB' },
+                            { year: 2025, name: 'Cade Klubnik', team: 'CLEM', pos: 'QB' },
+                            { year: 2024, name: 'Jalen Milroe', team: 'BAMA', pos: 'QB' },
+                            { year: 2023, name: 'Jayden Daniels', team: 'LSU', pos: 'QB' }
+                        ]
+                    },
+                    'Doak Walker Award': { 
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Walker&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Baraka Nwangwu', team: 'CLEV', pos: 'RB' },
+                            { year: 2028, name: 'Baraka Nwangwu', team: 'CLEV', pos: 'RB' },
+                            { year: 2027, name: 'Rickey Hunt Jr.', team: 'OHIO', pos: 'RB' },
+                            { year: 2026, name: 'Rickey Hunt Jr.', team: 'OHIO', pos: 'RB' },
+                            { year: 2025, name: 'DJ Giddens', team: 'KSU', pos: 'RB' },
+                            { year: 2024, name: 'Cam Skattebo', team: 'ASU', pos: 'RB' },
+                            { year: 2023, name: 'Ollie Gordon III', team: 'OKST', pos: 'RB' }
+                        ]
+                    },
+                    'Biletnikoff Award': {
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Biletnikoff&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Keke Odighizuwa', team: 'M-OH', pos: 'WR' },
+                            { year: 2028, name: 'Gordon Buggs', team: 'M-OH', pos: 'WR' },
+                            { year: 2027, name: 'Lynel Billups-Williams', team: 'M-OH', pos: 'WR' },
+                            { year: 2026, name: 'Lynel Billups-Williams', team: 'M-OH', pos: 'WR' },
+                            { year: 2025, name: 'Lynel Billups-Williams', team: 'M-OH', pos: 'WR' },
+                            { year: 2024, name: 'Cade McDonald', team: 'M-OH', pos: 'WR' },
+                            { year: 2023, name: 'Marvin Harrison Jr.', team: 'OSU', pos: 'WR' }
+                        ]
+                    },
+                    'John Mackey Award': { 
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Mackey&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Alani Hope', team: 'ORE', pos: 'TE' }, 
+                            { year: 2028, name: 'Kareem Duggan', team: 'CLEV', pos: 'TE' },
+                            { year: 2027, name: 'Darren Klein', team: 'CLEV', pos: 'TE' },
+                            { year: 2026, name: 'Jelani Thurman', team: 'OSU', pos: 'TE' },
+                            { year: 2025, name: 'Oscar Delp', team: 'UGA', pos: 'TE' }, 
+                            { year: 2024, name: 'Harold Fannin Jr.', team: 'CLEV', pos: 'TE' },
+                            { year: 2023, name: 'Brock Bowers', team: 'UGA', pos: 'TE' }
+                        ]
+                    },
+                    'Outland Trophy': {
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Outland&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Garrison Yusef', team: 'STAN', pos: 'OL' }, // Assuming STAN S is Stanford
+                            { year: 2028, name: 'Sullivan Absher', team: 'ND', pos: 'OL' },
+                            { year: 2027, name: 'Noah Dunham', team: 'WSU', pos: 'OL' },
+                            { year: 2026, name: 'Cade Bourd', team: 'IOWA', pos: 'OL' }, // Assuming IOWA is correct
+                            { year: 2025, name: 'Tyler Booker', team: 'BAMA', pos: 'OL' },
+                            { year: 2024, name: 'Tate Ratledge', team: 'UGA', pos: 'OL' }, 
+                            { year: 2023, name: 'T\'Vondre Sweat', team: 'TEX', pos: 'DL' }
+                        ]
+                    },
+                    'Rimington Trophy': {
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Rimington&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Garrison Yusaf', team: 'STAN', pos: 'C' },
+                            { year: 2028, name: 'Garrison Yusaf', team: 'STAN', pos: 'C' },
+                            { year: 2027, name: 'Noah Dunham', team: 'WSU', pos: 'C' },
+                            { year: 2026, name: 'Cade Bourd', team: 'IOWA', pos: 'C' },
+                            { year: 2025, name: 'Jake Slaughter', team: 'FLA', pos: 'C' },
+                            { year: 2024, name: 'Jacob Gardner', team: 'CSU', pos: 'C' }, // Assuming CSU for Cleveland State
+                            { year: 2023, name: 'J. Powers-Johnson', team: 'ORE', pos: 'C' }
+                        ]
+                    },
+                    'Lombardi Award': {
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Lombardi&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Steve Fuentes', team: 'MISS', pos: 'DL/LB' },
+                            { year: 2028, name: 'Chris Burge', team: 'UAB', pos: 'DL/LB' },
+                            { year: 2027, name: 'Jeffery Rush', team: 'MISS', pos: 'DL' },
+                            { year: 2026, name: 'T.J. Parker', team: 'CLEM', pos: 'DL' },
+                            { year: 2025, name: 'Romello Height', team: 'GT', pos: 'DL/LB' },
+                            { year: 2024, name: 'Donovan Ezeiruaku', team: 'BC', pos: 'DL' },
+                            { year: 2023, name: 'Laiatu Latu', team: 'UCLA', pos: 'DL' }
+                        ]
+                    },
+                    'Butkus Award': {
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Butkus&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Nelson Kumar', team: 'M-OH', pos: 'LB' },
+                            { year: 2028, name: 'Owen Long', team: 'CSU', pos: 'LB' },
+                            { year: 2027, name: 'Tavares Jameson', team: 'ORE', pos: 'LB' }, 
+                            { year: 2026, name: 'Red Murdock', team: 'BUFF', pos: 'LB' },
+                            { year: 2025, name: 'Kobe King', team: 'PSU', pos: 'LB' },
+                            { year: 2024, name: 'Suntarine Perkins', team: 'MISS', pos: 'LB' },
+                            { year: 2023, name: 'Laiatu Latu', team: 'UCLA', pos: 'LB' } 
+                        ]
+                    },
+                    'Jim Thorpe Award': { 
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Thorpe&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Santiago Huertelou', team: 'STAN', pos: 'DB' },
+                            { year: 2028, name: 'Nate Cavka', team: 'CLEV', pos: 'DB' }, 
+                            { year: 2027, name: 'Terry Bussey', team: 'TAMU', pos: 'DB' }, 
+                            { year: 2026, name: 'OJ Frederique Jr.', team: 'MIA', pos: 'DB' }, 
+                            { year: 2025, name: 'Kamari Wilson', team: 'FLA', pos: 'DB' },
+                            { year: 2024, name: 'Malachi Moore', team: 'BAMA', pos: 'DB' },
+                            { year: 2023, name: 'Trey Taylor', team: 'AFA', pos: 'S' }
+                        ]
+                    },
+                    'Lou Groza Award': { 
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Groza&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Erik Teamer', team: 'GSU', pos: 'K' },
+                            { year: 2028, name: 'Vinny LeClair', team: 'LT', pos: 'K' }, // Assuming LT for LA Tech
+                            { year: 2027, name: 'Caden Chittenden', team: 'UNLV', pos: 'K' },
+                            { year: 2026, name: 'Tyler Robles', team: 'USC', pos: 'K' },
+                            { year: 2025, name: 'Peyton Woodring', team: 'UGA', pos: 'K' },
+                            { year: 2024, name: 'Jonah Dalmas', team: 'BOIS', pos: 'K' }, // Assuming BOIS for Boise State
+                            { year: 2023, name: 'Graham Nicholson', team: 'M-OH', pos: 'K' } // Corrected from AFA to M-OH based on general knowledge, image was ambiguous.
+                        ]
+                    },
+                    'Ray Guy Award': { 
+                        trophyImage: 'https://placehold.co/150x200/E6C66E/4A3B31?text=Guy&font=oswald', 
+                        winners: [
+                            { year: 2029, name: 'Clyde Garrison', team: 'EMU', pos: 'P' },
+                            { year: 2028, name: 'Robert McCracken', team: 'SOSU', pos: 'P' }, // SOSU might be a typo or smaller school
+                            { year: 2027, name: 'Devin Wayne', team: 'AFA', pos: 'P' }, 
+                            { year: 2026, name: 'Jacob Ulrich', team: 'KENN', pos: 'P' }, // KENN likely Kennesaw State
+                            { year: 2025, name: 'Ryan Eckley', team: 'MSU', pos: 'P' },
+                            { year: 2024, name: 'Alex Mastromanno', team: 'FSU', pos: 'P' },
+                            { year: 2023, name: 'Tory Taylor', team: 'IOWA', pos: 'P' }
+                        ]
+                    }
+                    // Add other awards here if data becomes available
+                }
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openIcon = menuButton?.querySelector('.hamburger-icon');
+            const closeIcon = menuButton?.querySelector('.close-icon');
+
+            if (menuButton && mobileMenu && openIcon && closeIcon) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    openIcon.classList.toggle('hidden');
+                    closeIcon.classList.toggle('hidden');
+                });
+            }
+
+            // Set current year in footer
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</body>
+</html>

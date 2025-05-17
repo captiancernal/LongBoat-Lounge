@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-Americans - Longboat Lounge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        :root {
+            /* Palette inspired by player_awards.html for a prestigious feel */
+            --page-bg: #FDFBF5; /* Creamy off-white background */
+            --wood-dark: #6F4E37; /* Coffee brown for dark wood elements / text */
+            --wood-light: #A07855; /* Lighter wood tone for accents */
+            --gold-primary: #D4AF37; /* Old Gold - less bright, more classic */
+            --gold-secondary: #E6C66E; /* Lighter gold for highlights/hovers */
+            --text-primary: #4A3B31; /* Dark, rich brown for text */
+            --text-on-dark: #FDFBF5; /* Text on dark wood/gold backgrounds */
+
+            /* Original CSU Colors (for navbar consistency if needed, or can be adapted) */
+            --csu-green: #004D40;
+            --csu-white: #FFFFFF;
+            --csu-gray: #52545A;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--page-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            animation: pageFadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navbar styling (keeping original from other pages for consistency) */
+        .bg-csu-green { background-color: var(--csu-green); }
+        .text-csu-white { color: var(--csu-white); }
+        nav a { transition: color 0.3s ease, background-color 0.3s ease; }
+
+        /* Page Header */
+        .page-header h1 {
+            font-family: 'Oswald', sans-serif;
+            color: var(--wood-dark);
+            text-shadow: 1px 1px 2px var(--gold-secondary);
+        }
+        .page-header p {
+            color: var(--wood-light);
+        }
+
+        /* Tab Styling */
+        .content-tab-button {
+            font-family: 'Oswald', sans-serif;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--wood-light);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .content-tab-button.active, .content-tab-button:hover {
+            color: var(--gold-primary);
+            border-bottom-color: var(--gold-primary);
+        }
+        .content-tab-button.active {
+            background-color: rgba(212, 175, 55, 0.05); 
+        }
+        .tabs-container nav {
+             -ms-overflow-style: none;  /* IE and Edge */
+             scrollbar-width: none;  /* Firefox */
+        }
+        .tabs-container nav::-webkit-scrollbar { /* Chrome, Safari, Opera */
+            display: none;
+        }
+
+        /* All-American List Styling */
+        .season-content {
+            background-color: var(--csu-white);
+            border: 1px solid var(--gold-secondary);
+            border-left: 5px solid var(--gold-primary);
+            box-shadow: 0 4px 15px rgba(111, 78, 55, 0.1); 
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .team-title { /* For "First Team" */
+            font-family: 'Oswald', sans-serif;
+            color: var(--wood-dark);
+            font-size: 1.75rem; /* Increased size for single team display */
+            margin-top: 0.5rem; /* Adjusted from first-of-type */
+            margin-bottom: 1.5rem; /* Increased bottom margin */
+            padding-bottom: 0.75rem; /* Increased padding */
+            border-bottom: 2px solid var(--gold-secondary);
+            text-align: center; /* Center the title */
+        }
+
+        .position-group {
+            margin-bottom: 1.5rem;
+        }
+        .position-title {
+            font-family: 'Oswald', sans-serif;
+            color: var(--gold-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .player-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .player-list li {
+            padding: 0.4rem 0.25rem;
+            border-bottom: 1px solid #f3eade; /* Lighter, warmer separator */
+            font-size: 0.95rem;
+        }
+        .player-list li:last-child {
+            border-bottom: none;
+        }
+        .player-entry { 
+            display: inline-block; 
+            margin-right: 1em; 
+        }
+        .player-name {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .player-school {
+            font-style: italic;
+            color: var(--wood-light);
+            font-size: 0.9em;
+            margin-left: 0.25rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 4px solid var(--gold-primary);
+        }
+    </style>
+</head>
+<body class="bg-page-bg">
+    <nav class="bg-csu-green shadow-md fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center">
+                     <a href="index.html" class="flex items-center space-x-2">
+                         <span class="text-csu-white text-xl font-bold">Longboat Lounge</span>
+                         <img class="h-10 w-auto ml-2" src="https://placehold.co/120x40/004D40/FFFFFF?text=CSU+Logo" alt="CSU Logo Placeholder" onerror="this.onerror=null; this.src='https://placehold.co/120x40/004D40/FFFFFF?text=CSU+Error';">
+                     </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="players.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Players</a>
+                        <a href="player_awards.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Player Awards</a>
+                        <a href="all_americans.html" class="bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">All-Americans</a>
+                        <a href="csu_depth_chart.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">CSU Depth Chart</a>
+                        <a href="schedule.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Schedule</a>
+                        <a href="stats.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Stats Hub</a>
+                        <a href="the_cauldron.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">The Cauldron</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" id="menu-button" class="bg-csu-green inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-csu-green focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6 hamburger-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /> </svg>
+                        <svg class="hidden h-6 w-6 close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-csu-green">
+                <a href="index.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="players.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Players</a>
+                <a href="player_awards.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Player Awards</a>
+                <a href="all_americans.html" class="bg-gray-700 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">All-Americans</a>
+                <a href="csu_depth_chart.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">CSU Depth Chart</a>
+                <a href="schedule.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Schedule</a>
+                <a href="stats.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Stats Hub</a>
+                <a href="the_cauldron.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">The Cauldron</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <header class="mb-10 text-center page-header">
+                <h1 class="text-4xl md:text-5xl font-bold mb-3">All-American Selections</h1>
+                <p class="text-lg md:text-xl">Honoring the nation's top collegiate football talent by season.</p>
+            </header>
+
+            <div x-data="allAmericansPageData()" class="mb-6">
+                <div class="border-b-2 border-gold-secondary mb-6 tabs-container">
+                    <nav class="-mb-px flex space-x-1 sm:space-x-2 overflow-x-auto pb-1" aria-label="Seasons">
+                        <template x-for="season in seasons" :key="season.year">
+                            <button @click="selectedSeason = season.year"
+                                    :class="{ 'active': selectedSeason === season.year }"
+                                    class="content-tab-button">
+                                <span x-text="season.year + ' All-Americans'"></span>
+                            </button>
+                        </template>
+                    </nav>
+                </div>
+
+                <div class="mt-6">
+                    <template x-for="season in seasons" :key="season.year">
+                        <div x-show="selectedSeason === season.year" 
+                             x-transition:enter="transition ease-out duration-300" 
+                             x-transition:enter-start="opacity-0 transform scale-95" 
+                             x-transition:enter-end="opacity-100 transform scale-100"
+                             class="season-content">
+                            
+                            <div>
+                                <h3 class="team-title">First Team All-Americans <span x-text="'(' + season.year + ')'"></span></h3>
+                                
+                                <div class="position-group">
+                                    <h4 class="position-title">Offense</h4>
+                                    <ul class="player-list">
+                                        <template x-for="pos in ['QB', 'RB', 'WR', 'TE', 'OT', 'OG', 'C']" :key="pos">
+                                            <li>
+                                                <strong><span x-text="pos + ':'"></span></strong>
+                                                <template x-if="getPlayersByTeamPos(season.year, 'First Team', pos).length > 0">
+                                                    <template x-for="player in getPlayersByTeamPos(season.year, 'First Team', pos)" :key="player.name + player.school">
+                                                        <span class="player-entry">
+                                                            <span class="player-name" x-text="player.name"></span>
+                                                            <span class="player-school" x-text="'(' + player.school + ')'"></span>
+                                                        </span>
+                                                    </template>
+                                                </template>
+                                                <template x-if="getPlayersByTeamPos(season.year, 'First Team', pos).length === 0">
+                                                    <span class="text-gray-500 italic ml-2">No selection</span>
+                                                </template>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </div>
+
+                                <div class="position-group">
+                                    <h4 class="position-title">Defense</h4>
+                                    <ul class="player-list">
+                                        <template x-for="pos in ['DE', 'DT', 'LB', 'CB', 'S']" :key="pos">
+                                            <li>
+                                                <strong><span x-text="pos + ':'"></span></strong>
+                                                <template x-if="getPlayersByTeamPos(season.year, 'First Team', pos).length > 0">
+                                                    <template x-for="player in getPlayersByTeamPos(season.year, 'First Team', pos)" :key="player.name + player.school">
+                                                         <span class="player-entry">
+                                                            <span class="player-name" x-text="player.name"></span>
+                                                            <span class="player-school" x-text="'(' + player.school + ')'"></span>
+                                                        </span>
+                                                    </template>
+                                                </template>
+                                                <template x-if="getPlayersByTeamPos(season.year, 'First Team', pos).length === 0">
+                                                    <span class="text-gray-500 italic ml-2">No selection</span>
+                                                </template>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </div>
+
+                                <div class="position-group">
+                                    <h4 class="position-title">Special Teams</h4>
+                                    <ul class="player-list">
+                                        <template x-for="pos in ['K', 'P', 'RS']" :key="pos">
+                                             <li>
+                                                <strong><span x-text="pos + ':'"></span></strong>
+                                                <template x-if="getPlayersByTeamPos(season.year, 'First Team', pos).length > 0">
+                                                    <template x-for="player in getPlayersByTeamPos(season.year, 'First Team', pos)" :key="player.name + player.school">
+                                                         <span class="player-entry">
+                                                            <span class="player-name" x-text="player.name"></span>
+                                                            <span class="player-school" x-text="'(' + player.school + ')'"></span>
+                                                        </span>
+                                                    </template>
+                                                </template>
+                                                <template x-if="getPlayersByTeamPos(season.year, 'First Team', pos).length === 0">
+                                                    <span class="text-gray-500 italic ml-2">No selection</span>
+                                                </template>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p class="text-center text-gray-500 mt-8 italic" x-text="'End of ' + season.year + ' First Team All-American selections.'"></p>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-csu-green text-gray-300 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; <span id="current-year">[YEAR]</span> Fictional Football League Tracker. All rights reserved.</p>
+            <p class="mt-1">[Go Vikings!]</p>
+        </div>
+    </footer>
+
+    <script>
+        function allAmericansPageData() {
+            return {
+                selectedSeason: '2023', // Default selected season
+                seasons: [ // Data for First Team only
+                    {
+                        year: '2023',
+                        teams: {
+                            'First Team': {
+                                'QB': [{ name: 'Jayden Daniels', school: 'LSU' }],
+                                'RB': [{ name: 'Cody Schrader', school: 'MIZ' }, { name: 'Ollie Gordon III', school: 'ORST' }],
+                                'WR': [{ name: 'Marvin Harrison Jr.', school: 'OSU' }, { name: 'Malik Nabers', school: 'LSU' }],
+                                'TE': [{ name: 'Brock Bowers', school: 'UGA' }],
+                                'OT': [{ name: 'Joe Alt', school: 'ND' }, { name: 'Taliese Fuaga', school: 'ORST' }],
+                                'OG': [{ name: 'Cooper Beebe', school: 'KSU' }, { name: 'Zak Zinter', school: 'MICH' }],
+                                'C':  [{ name: 'Sedrick Van Pran', school: 'UGA' }],
+                                'DE': [{ name: 'Laiatu Latu', school: 'UCLA' }, { name: 'Dallas Turner', school: 'BAMA' }],
+                                'DT': [{ name: 'T\'Vondre Sweat', school: 'TEX' }, { name: 'Jer\'Zhan Newton', school: 'SYR' }],
+                                'LB': [{ name: 'Jeremiah Trotter Jr.', school: 'CLEM' }, { name: 'Edgerrin Cooper', school: 'TAMU' }, { name: 'Payton Wilson', school: 'NCST' }],
+                                'CB': [{ name: 'Mike Sainristil', school: 'MICH' }, { name: 'Terrion Arnold', school: 'BAMA' }],
+                                'S':  [{ name: 'Malaki Starks', school: 'UGA' }, { name: 'Xavier Watts', school: 'ND' }],
+                                'K':  [{ name: 'Graham Nicholson', school: 'UMD' }],
+                                'P':  [{ name: 'Tory Taylor', school: 'IOWA' }],
+                                'RS': [{ name: 'Zachariah Branch', school: 'USC' }]
+                            }
+                        }
+                    },
+                    {
+                        year: '2024',
+                        teams: {
+                            'First Team': {
+                                'QB': [{ name: 'Jalen Milroe', school: 'BAMA' }],
+                                'RB': [{ name: 'Cam Skattebo', school: 'ASU' }, { name: 'Anthony Tyus III', school: 'OHIO' }],
+                                'WR': [{ name: 'Tetairoa McMillan', school: 'ARIZ' }, { name: 'Chris Bell', school: 'LOU' }],
+                                'TE': [{ name: 'Harold Fannin Jr.', school: 'CLEV' }],
+                                'OT': [{ name: 'Kelvin Banks Jr.', school: 'TEX' }, { name: 'Jonah Savaiinaea', school: 'ARIZ' }],
+                                'OG': [{ name: 'Donovan Jackson', school: 'OSU' }, { name: 'Tate Ratledge', school: 'UGA' }],
+                                'C':  [{ name: 'Jonah Monheim', school: 'USC' }],
+                                'DE': [{ name: 'Jack Sawyer', school: 'OSU' }, { name: 'Abdul Carter', school: 'PSU' }],
+                                'DT': [{ name: 'Mason Graham', school: 'MICH' }, { name: 'Walter Nolen', school: 'MISS' }],
+                                'LB': [{ name: 'Harold Perkins Jr.', school: 'LSU' }, { name: 'Jay Higgins', school: 'IOWA' }, { name: 'Barrett Carter', school: 'CLEM' }],
+                                'CB': [{ name: 'Will Johnson', school: 'MICH' }, { name: 'Shavon Revel Jr.', school: 'ECU' }],
+                                'S':  [{ name: 'Caleb Downs', school: 'OSU' }, { name: 'Malaki Starks', school: 'UGA' }],
+                                'K':  [{ name: 'Graham Nicholson', school: 'BAMA' }],
+                                'P':  [{ name: 'Brett Thorson', school: 'UGA' }],
+                                'RS': [{ name: 'Josh Aka', school: 'MISS' }]
+                            }
+                        }
+                    },
+                    {
+                        year: '2025',
+                        teams: {
+                            'First Team': {
+                                'QB': [{ name: 'Cade Klubnik', school: 'CLEM' }],
+                                'RB': [{ name: 'Makhi Hughes', school: 'TULN' }, { name: 'Rickey Hunt Jr.', school: 'OHIO' }],
+                                'WR': [{ name: 'Jay Fair', school: 'USC' }, { name: 'Lynel Billups-Williams', school: 'M-OH' }],
+                                'TE': [{ name: 'Terrance Carter', school: 'SHU' }],
+                                'OT': [{ name: 'Josh Conerly Jr.', school: 'ORE' }, { name: 'Jonah Savaiinaea', school: 'ARIZ' }],
+                                'OG': [{ name: 'Weylin Lapuaho', school: 'BYU' }, { name: 'Jaeden Roberts', school: 'BAMA' }],
+                                'C':  [{ name: 'Jake Slaughter', school: 'FLA' }],
+                                'DE': [{ name: 'Mykel Williams', school: 'UGA' }, { name: 'Kenneth Grant', school: 'CLEM' }],
+                                'DT': [{ name: 'Peter Woods', school: 'MISS' }, { name: 'Walter Nolen', school: 'MICH' }],
+                                'LB': [{ name: 'David Bailey', school: 'STAN' }, { name: 'Nick Martin', school: 'OKST' }, { name: 'Jalon Walker', school: 'UGA' }],
+                                'CB': [{ name: 'Tacario Davis', school: 'ARIZ' }, { name: 'Jahlil Florence', school: 'ORE' }],
+                                'S':  [{ name: 'Caleb Downs', school: 'OSU' }, { name: 'Kevin Winston Jr.', school: 'PSU' }],
+                                'K':  [{ name: 'John Love', school: 'VT' }],
+                                'P':  [{ name: 'Ross James', school: 'ORE' }],
+                                'RS': [{ name: 'Drelon Miller', school: 'COLO' }]
+                            }
+                        }
+                    },
+                    {
+                        year: '2026',
+                        teams: {
+                            'First Team': {
+                                'QB': [{ name: 'Blake Barnett', school: 'KSU' }],
+                                'RB': [{ name: 'Rickey Hunt Jr.', school: 'OHIO' }, { name: 'Darius Taylor', school: 'MICH' }],
+                                'WR': [{ name: 'Lynel Billups-Williams', school: 'M-OH' }, { name: 'Cam Coleman', school: 'FLA' }],
+                                'TE': [{ name: 'Elijah Boyd', school: 'CLEV' }],
+                                'OT': [{ name: 'Jordan Seaton', school: 'COLO' }, { name: 'Francis Mauigoa', school: 'MIA' }],
+                                'OG': [{ name: 'Olaivavega Ioane', school: 'PSU' }, { name: 'Tavake Tuikolovatu', school: 'UCLA' }],
+                                'C':  [{ name: 'Cade Borud', school: 'IOWA' }],
+                                'DE': [{ name: 'T.J. Parker', school: 'CLEM' }, { name: 'Markis Deal', school: 'TCU' }],
+                                'DT': [{ name: 'Mike Green', school: 'MRSH' }, { name: 'Trevion Williams', school: 'MSST' }],
+                                'LB': [{ name: 'Tylen Singleton', school: 'LSU' }, { name: 'Jamal Anderson', school: 'CLEM' }, { name: 'Tony Rojas', school: 'PSU' }],
+                                'CB': [{ name: 'Ellis Robinson IV', school: 'UGA' }, { name: 'Antonio White Jr.', school: 'NUTS' }],
+                                'S':  [{ name: 'Jaylen Heyward', school: 'RUTG' }, { name: 'Randon Fontenette', school: 'VAN' }],
+                                'K':  [{ name: 'John Love', school: 'VT' }],
+                                'P':  [{ name: 'Max Fletcher', school: 'UC' }],
+                                'RS': [{ name: 'Ny Carr', school: 'PHA' }]
+                            }
+                        }
+                    },
+                    {
+                        year: '2027',
+                        teams: {
+                            'First Team': {
+                                'QB': [{ name: 'Austin Mack', school: 'BAMA' }],
+                                'RB': [{ name: 'Rickey Hunt Jr.', school: 'OHIO' }, { name: 'Josh Ringer', school: 'M-OH' }],
+                                'WR': [{ name: 'Lynel Billups-Williams', school: 'M-OH' }, { name: 'Hakeem Butt', school: 'OU' }],
+                                'TE': [{ name: 'Darren Klein', school: 'CLEV' }],
+                                'OT': [{ name: 'Charles Jagusah', school: 'ND' }, { name: 'Isiah Garcia', school: 'UTAH' }],
+                                'OG': [{ name: 'Manasse Itete', school: 'FSU' }, { name: 'Deantae Falah', school: 'TTU' }],
+                                'C':  [{ name: 'Noah Dunham', school: 'WSU' }],
+                                'DE': [{ name: 'Whitefield Powell', school: 'CSU' }, { name: 'David Stone', school: 'OU' }],
+                                'DT': [{ name: 'Lugard Edokpayi', school: 'MICH' }, { name: 'Terrance Green', school: 'ORE' }],
+                                'LB': [{ name: 'Javier Chick', school: 'OSU' }, { name: 'Sammy Brown', school: 'CLEM' }, { name: 'Dee Crayton', school: 'CLEM' }],
+                                'CB': [{ name: 'Jayden Rowe', school: 'DU' }, { name: 'Therrian Alexander III', school: 'BYU' }],
+                                'S':  [{ name: 'Peyton Woodyard', school: 'ORE' }, { name: 'Randon Fontenette', school: 'VAN' }],
+                                'K':  [{ name: 'Kyle Konrardy', school: 'ISU' }],
+                                'P':  [{ name: 'Declan Duley', school: 'ILL' }],
+                                'RS': [{ name: 'Trenton Cloud', school: 'ECU' }]
+                            }
+                        }
+                    },
+                    {
+                        year: '2028',
+                        teams: {
+                            'First Team': {
+                                'QB': [{ name: 'Cornell Tavares', school: 'M-OH' }],
+                                'RB': [{ name: 'Baraka Nwangwu', school: 'CLEV' }, { name: 'John Ybarra', school: 'OHIO' }],
+                                'WR': [{ name: 'Marcel Williams', school: 'MRSH' }, { name: 'Kenny Tongues', school: 'CLEV' }],
+                                'TE': [{ name: 'Kareem Duggan', school: 'CLEV' }],
+                                'OT': [{ name: 'Stanton Ramil', school: 'MSU' }, { name: 'Terrell Parry', school: 'LOU' }],
+                                'OG': [{ name: 'Sullivan Absher', school: 'ND' }, { name: 'Paul Reeshad', school: 'MIA' }],
+                                'C':  [{ name: 'Trent Rahman', school: 'WASH' }],
+                                'DE': [{ name: 'George Ybarra', school: 'HTSU' }, { name: 'Justin Scott', school: 'MIA' }],
+                                'DT': [{ name: 'Quan Saleh', school: 'VT' }, { name: 'Johnny Bowens III', school: 'UTSA' }],
+                                'LB': [{ name: 'Zavier Hamilton', school: 'USF' }, { name: 'Ashton Woods', school: 'UNC' }, { name: 'Tyler Vedvik', school: 'WASH' }],
+                                'CB': [{ name: 'Warren Roberson', school: 'TEX' }, { name: 'Eric Vernon', school: 'KSU' }],
+                                'S':  [{ name: 'Aaron Flowers', school: 'TCU' }, { name: 'James Haywood', school: 'KU' }],
+                                'K':  [{ name: 'Kyle Lemmermann', school: 'TCU' }],
+                                'P':  [{ name: 'Caleb Sapp', school: 'HAW' }],
+                                'RS': [{ name: 'Nitro Tuggle', school: 'UGA' }]
+                            }
+                        }
+                    },
+                    {
+                        year: '2029',
+                        teams: {
+                            'First Team': {
+                                'QB': [{ name: 'Cornell Tavares', school: 'M-OH' }],
+                                'RB': [{ name: 'Baraka Nwangwu', school: 'CLEV' }, { name: 'Doug Major', school: 'M-OH' }],
+                                'WR': [{ name: 'Keke Odighizuwa', school: 'M-OH' }, { name: 'David Eagles', school: 'PSU' }],
+                                'TE': [{ name: 'Stephen Everett', school: 'CLEV' }],
+                                'OT': [{ name: 'Troy Levcik', school: 'PSU' }, { name: 'Nakobe Togai', school: 'AUB' }],
+                                'OG': [{ name: 'Demetrious Hurley', school: 'TULN' }, { name: 'Danny Schable', school: 'ECU' }],
+                                'C':  [{ name: 'Garrison Yusaf', school: 'STAN' }],
+                                'DE': [{ name: 'Gene LaBoy', school: 'ND' }, { name: 'Migel Tejada', school: 'MIA' }],
+                                'DT': [{ name: 'Quan Saleh', school: 'VT' }, { name: 'Nicholas Rudnick', school: 'ND' }],
+                                'LB': [{ name: 'Bobby Jackson', school: 'CLEM' }, { name: 'Matthew Kim', school: 'TROY' }, { name: 'Cedrick Barnard', school: 'AUB' }],
+                                'CB': [{ name: 'Scottie Koch', school: 'UMD' }, { name: 'Quan Gumbs', school: 'UNC' }],
+                                'S':  [{ name: 'Donnie Hurley', school: 'CAL' }, { name: 'James Haywood', school: 'KU' }],
+                                'K':  [{ name: 'Trindon Douzable', school: 'UH' }],
+                                'P':  [{ name: 'Devin Bergstrom', school: 'UNT' }],
+                                'RS': [{ name: 'Ezekiel Longacre', school: 'UT' }]
+                            }
+                        }
+                    }
+                ],
+                
+                getPlayersByTeamPos(year, teamName, position) {
+                    const seasonData = this.seasons.find(s => s.year === year);
+                    // Ensure teamName exists in seasonData.teams before trying to access it
+                    if (seasonData && seasonData.teams[teamName] && seasonData.teams[teamName][position]) {
+                        return seasonData.teams[teamName][position];
+                    }
+                    return []; 
+                },
+
+                init() {
+                    // Data is now directly in the seasons array.
+                }
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openIcon = menuButton?.querySelector('.hamburger-icon');
+            const closeIcon = menuButton?.querySelector('.close-icon');
+
+            if (menuButton && mobileMenu && openIcon && closeIcon) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    openIcon.classList.toggle('hidden');
+                    closeIcon.classList.toggle('hidden');
+                });
+            }
+
+            // Set current year in footer
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</body>
+</html>

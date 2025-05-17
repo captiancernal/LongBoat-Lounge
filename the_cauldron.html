@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cauldron - CSU Vikings Football Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Apply Inter font globally */
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            /* ADDED: Apply fade-in animation on page load */
+            animation: pageFadeIn 0.6s ease-out forwards;
+            opacity: 0; /* Start hidden for animation */
+        }
+        /* Define CSU Vikings Colors */
+        :root {
+            --csu-green: #004D40;
+            --csu-white: #FFFFFF;
+            --csu-gray: #52545A;
+        }
+        .bg-csu-green { background-color: var(--csu-green); }
+        .text-csu-green { color: var(--csu-green); }
+        .border-csu-green { border-color: var(--csu-green); }
+        .text-csu-white { color: var(--csu-white); }
+        .text-csu-gray { color: var(--csu-gray); }
+
+        /* Placeholder image style for gallery */
+        .gallery-placeholder {
+            background-color: #e2e8f0; /* gray-200 */
+            height: 200px; /* Adjust as needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b; /* slate-500 */
+            font-style: italic;
+            border-radius: 0.375rem; /* rounded-md */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition for hover effect */
+        }
+        .gallery-placeholder:hover {
+             transform: scale(1.03); /* Slightly scale up on hover */
+             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+        }
+
+        /* Podcast episode styling */
+        .podcast-episode {
+            border-left: 4px solid var(--csu-green);
+            transition: box-shadow 0.3s ease, transform 0.3s ease; /* Add transition for hover effect */
+        }
+        .podcast-episode:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add subtle shadow on hover */
+            transform: translateY(-2px); /* Lift slightly */
+        }
+
+        /* ADDED: Keyframes for page fade-in */
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ADDED: Smoother transitions for navigation links */
+        nav a {
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+        /* Add transitions to other links/buttons if desired */
+        main a {
+             transition: color 0.3s ease, text-decoration 0.3s ease;
+        }
+
+    </style>
+    <script>
+        // Basic JS for potential future use (like mobile menu)
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openIcon = menuButton?.querySelector('.hamburger-icon');
+            const closeIcon = menuButton?.querySelector('.close-icon');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    openIcon?.classList.toggle('hidden');
+                    closeIcon?.classList.toggle('hidden');
+                });
+            }
+            const currentYear = new Date().getFullYear();
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) yearSpan.textContent = currentYear;
+
+            // Note: For true seamless transitions without page flash,
+            // more advanced JS (like fetching content and replacing parts
+            // of the page) would be needed. This CSS provides a smoother load-in.
+        });
+    </script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-csu-green shadow-md fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 flex items-center">
+                     <a href="index.html" class="flex items-center space-x-2">
+                         <img class="h-10 w-auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Cleveland_State_Vikings_logo.svg/200px-Cleveland_State_Vikings_logo.svg.png" alt="CSU Logo" onerror="this.onerror=null; this.style.display='none'; document.getElementById('logo-text').style.display='block';">
+                         <span id="logo-text" class="text-csu-white text-xl font-bold hidden">CSU Vikings Hub</span>
+                         <span class="text-csu-white text-xl font-bold ml-2 hidden sm:inline">Vikings Hub</span>
+                     </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="players.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Coaches</a>
+                        <a href="player_awards.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Player Awards</a>
+                        <a href="all_americans.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">All-Americans</a>
+                        <a href="csu_depth_chart.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">CSU Depth Chart</a>
+                        <a href="schedule.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Schedule</a>
+                        <a href="stats.html" class="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Stats Hub</a>
+                        <a href="the_cauldron.html" class="bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">The Cauldron</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" id="menu-button" class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6 hamburger-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /> </svg>
+                        <svg class="hidden h-6 w-6 close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-csu-green">
+                 <a href="index.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="players.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Coaches</a>
+                <a href="player_awards.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Player Awards</a>
+                <a href="all_americans.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">All-Americans</a>
+                <a href="csu_depth_chart.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">CSU Depth Chart</a>
+                <a href="schedule.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Schedule</a>
+                <a href="stats.html" class="text-gray-300 hover:bg-gray-600 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Stats Hub</a>
+                <a href="the_cauldron.html" class="bg-gray-700 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">The Cauldron</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <main class="pt-24 pb-10"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <header class="mb-8">
+                <h1 class="text-3xl font-bold text-center text-gray-900">The Cauldron</h1>
+                <p class="text-center text-gray-600 mt-2">Multimedia hub: Photos, videos, and podcasts.</p>
+            </header>
+
+            <section id="gallery" class="mb-12">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-l-4 border-csu-green pl-3">Photo Gallery</h2>
+                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <div class="gallery-placeholder">[Image 1 Placeholder]</div>
+                    <div class="gallery-placeholder">[Image 2 Placeholder]</div>
+                    <div class="gallery-placeholder">[Image 3 Placeholder]</div>
+                    <div class="gallery-placeholder">[Image 4 Placeholder]</div>
+                    <div class="gallery-placeholder">[Image 5 Placeholder]</div>
+                    <div class="gallery-placeholder">[Image 6 Placeholder]</div>
+                    <div class="gallery-placeholder">[Image 7 Placeholder]</div>
+                    <div class="gallery-placeholder">[Image 8 Placeholder]</div>
+                    </div>
+                 </section>
+
+            <section id="podcast" class="mb-8">
+                 <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-l-4 border-csu-green pl-3">Vikings Podcast</h2>
+                 <div class="space-y-6">
+                    <div class="bg-white shadow-md rounded-lg p-5 podcast-episode">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-1">[PODCAST_EPISODE_1_TITLE_PLACEHOLDER]</h3>
+                        <p class="text-sm text-gray-500 mb-2">Posted: [DATE_PLACEHOLDER] | Duration: [DURATION_PLACEHOLDER]</p>
+                        <p class="text-gray-700 text-sm mb-3">[Brief description of the podcast episode placeholder...]</p>
+                        <div class="bg-gray-100 p-3 rounded text-center text-sm text-gray-600">
+                            [Audio Player Placeholder or Listen Link]
+                        </div>
+                    </div>
+                     <div class="bg-white shadow-md rounded-lg p-5 podcast-episode">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-1">[PODCAST_EPISODE_2_TITLE_PLACEHOLDER]</h3>
+                        <p class="text-sm text-gray-500 mb-2">Posted: [DATE_PLACEHOLDER] | Duration: [DURATION_PLACEHOLDER]</p>
+                        <p class="text-gray-700 text-sm mb-3">[Brief description of the podcast episode placeholder...]</p>
+                        <div class="bg-gray-100 p-3 rounded text-center text-sm text-gray-600">
+                            [Audio Player Placeholder or Listen Link]
+                        </div>
+                    </div>
+                     <div class="bg-white shadow-md rounded-lg p-5 podcast-episode">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-1">[PODCAST_EPISODE_3_TITLE_PLACEHOLDER]</h3>
+                        <p class="text-sm text-gray-500 mb-2">Posted: [DATE_PLACEHOLDER] | Duration: [DURATION_PLACEHOLDER]</p>
+                        <p class="text-gray-700 text-sm mb-3">[Brief description of the podcast episode placeholder...]</p>
+                        <div class="bg-gray-100 p-3 rounded text-center text-sm text-gray-600">
+                            [Audio Player Placeholder or Listen Link]
+                        </div>
+                    </div>
+                    </div>
+                 </section>
+
+        </div>
+    </main>
+
+    <footer class="bg-csu-green text-gray-300 py-6 mt-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; <span id="current-year">[YEAR]</span> Fictional Football League Tracker. All rights reserved.</p>
+            <p class="mt-1">[Go Vikings!]</p>
+        </div>
+    </footer>
+
+</body>
+</html>
